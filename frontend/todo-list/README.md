@@ -1,12 +1,19 @@
-# React + Vite
+# This is a To-Do List project that uses WebSockets and Redis to store items.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Backend side
 
-Currently, two official plugins are available:
+You can install all the dependencies by running:
+npm install
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Then start the server using:
+node server.js
 
-## Expanding the ESLint configuration
+## frontend sie
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Here also, install all the dependencies using:
+npm install
+
+Then run the project using:
+node server.js
+
+Your project should now be running.

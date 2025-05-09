@@ -1,35 +1,52 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useState, useEffect } from "react";
+import { io } from "socket.io-client";
+import axios from "axios";
+import "./App.css";
+
+const socket = io("http://localhost:3000");
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [task, setTask] = useState("");
+  const [tasks, setTasks] = useState([]);
+
+  const fetchTasks = async () => {
+    const res = await axios.get("http://localhost:3000/fetchAllTasks");
+    setTasks(res.data);
+  };
+
+  useEffect(() => {
+    fetchTasks();
+  }, []);
+
+  const addTask = () => {
+    if (!task.trim()) return;
+    socket.emit("add", task);
+    setTasks((prev) => [...prev, task]);
+    setTask("");
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
+    <div className="main-wrapper">
       <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
+        <h2 className="header">📒 Note App</h2>
+        <div className="input-group">
+          <input
+            type="text"
+            placeholder="New Note..."
+            value={task}
+            onChange={(e) => setTask(e.target.value)}
+          />
+          <button onClick={addTask}>➕ Add</button>
+        </div>
+        <h4 className="subheader">Notes</h4>
+        <ul className="note-list">
+          {tasks.map((note, idx) => (
+            <li key={idx}>{note}</li>
+          ))}
+        </ul>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    </div>
+  );
 }
 
-export default App
+export default App;
